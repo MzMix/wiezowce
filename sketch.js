@@ -113,18 +113,21 @@ function addMethodsToObjects() {
         alert("Wybrano nieprawidłowy plik!");
     }
 
-    action.showModal = function (value) {
+    action.loadTemplate = function (id) {
+        templatka = templateHTML.querySelector(id);
+        clone = templatka.content.cloneNode(true);
+        insert = clone.querySelector(".modal-content");
+        select(".modal-dialog").child(insert);
+    }
+
+    action.showModal = function (value, saveType) {
         let el;
         select(".modal-dialog").html("");
 
         switch (value) {
             case 'changeColorSet':
 
-                templatka = templateHTML.querySelector("#changeColorSet");
-                clone = templatka.content.cloneNode(true);
-                insert = clone.querySelector(".modal-content");
-                select(".modal-dialog").child(insert);
-
+                action.loadTemplate("#changeColorSet");
                 this.refreshColorSets();
 
                 el = createSelect();
@@ -142,10 +145,7 @@ function addMethodsToObjects() {
 
             case 'changeSegmentSize':
 
-                templatka = templateHTML.querySelector("#changeSegmentSize");
-                clone = templatka.content.cloneNode(true);
-                insert = clone.querySelector(".modal-content");
-                select(".modal-dialog").child(insert);
+                action.loadTemplate("#changeSegmentSize");
 
                 el = createSlider(0.5, 1.5, settings.skalar, 0.10);
                 el.addClass("form-control-range");
@@ -172,11 +172,7 @@ function addMethodsToObjects() {
 
             case 'addCustomColorSet':
                 $('#modal').modal('show');
-
-                templatka = templateHTML.querySelector("#addCustomColorSet");
-                clone = templatka.content.cloneNode(true);
-                insert = clone.querySelector(".modal-content");
-                select(".modal-dialog").child(insert);
+                action.loadTemplate("#addCustomColorSet");
 
                 for (let col of settings.colorMatrix) {
 
@@ -195,16 +191,42 @@ function addMethodsToObjects() {
 
             case 'loadColorsFromFile':
                 $('#modal').modal('show');
-
-                templatka = templateHTML.querySelector("#loadColorsFromFile");
-                clone = templatka.content.cloneNode(true);
-                insert = clone.querySelector(".modal-content");
-                select(".modal-dialog").child(insert);
+                action.loadTemplate("#loadColorsFromFile");
 
                 let input = createFileInput(handleFile, false);
                 input.attribute("accept", "application/json");
 
                 select(".modal-body").child(input);
+
+                break;
+
+            case "saveFile":
+                $('#modal').modal('show');
+                action.loadTemplate("#saveFile");
+                settings["fileName"] = 'plik';
+
+                let extension = '';
+
+                if (saveType == 'img') {
+                    let data = new Date();
+                    settings.fileName = `plansza-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`;
+                    extension = '.png';
+                    select('.fileNameBtn').attribute('onclick', `action.saveImg()`)
+                } else if (saveType == 'json') {
+                    settings.fileName = 'kolory';
+                    extension = '.json';
+                    select('.fileNameBtn').attribute('onclick', `action.saveColorSets()`)
+                }
+
+                select(".insertFileInfo").html(settings.fileName + extension)
+
+                let fileNameInput = createInput(settings.fileName);
+                fileNameInput.addClass("form-control fileNameInput");
+                fileNameInput.changed(() => {
+                    settings.fileName = select('.fileNameInput').value();
+                    select(".insertFileInfo").html(settings.fileName + extension)
+                });
+                select(".modal-body").child(fileNameInput);
 
                 break;
 
@@ -250,8 +272,7 @@ function addMethodsToObjects() {
     userInterface.executeQueue = {}
 
     action.saveImg = function () {
-        let data = new Date();
-        saveCanvas(`plansza-${data.getHours()}-${data.getMinutes()}-${data.getSeconds()}`, 'png');
+        saveCanvas(settings.fileName, 'png');
     }
 
     action.saveColorSets = function () {
@@ -277,7 +298,7 @@ function addMethodsToObjects() {
         }
 
         json.setsOfColors = listOfSets;
-        saveJSON(json, "kolory");
+        saveJSON(json, settings.fileName);
     }
 
     action.resetBoard = function () {

@@ -16,8 +16,12 @@
             </ul><a href="#submenuUdostępnianie" class="dropdown-toggle" data-toggle="collapse"
                 aria-expanded="false">Udostępnianie</a>
             <ul class="collapse list-unstyled" id="submenuUdostępnianie">
-                <li class="menuOption"><a href="#" onclick="action.saveImg()">Zapis planszy do pliku</a></li>
-                <li class="menuOption"><a href="#" onclick="action.saveColorSets()">Zapis zestawów kolorów do pliku</a>
+                <li class="menuOption"><a href="#" onclick="action.showModal('saveFile','img')">Zapis planszy do
+                        pliku</a>
+                </li>
+                <li class="menuOption"><a href="#" onclick="action.showModal('saveFile','json')">Zapis zestawów kolorów
+                        do
+                        pliku</a>
                 </li>
             </ul><a href="#submenuDostosowywanie" class="dropdown-toggle" data-toggle="collapse"
                 aria-expanded="false">Dostosowywanie</a>
@@ -147,6 +151,36 @@
         </div>
 
     </template>
+
+    <template class="modal" id="saveFile">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalLabel">Zapisz plik</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+                <p>Plik zostanie zapisany jako: <span class="insertFileInfo font-weight-bold"></span></p>
+                <p class="font-weight-light">Edytuj nazwę pliku:</p>
+            </div>
+            <div class="modal-footer">
+                <div class="footerRight col-6 text-right">
+                    <button type="button" class="btn btn-primary order-2 modalBtn fileNameBtn" data-dismiss="modal"
+                        onclick="">Zapisz plik</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
 </body>
 
 </html>
