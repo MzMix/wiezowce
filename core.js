@@ -1,12 +1,41 @@
 new p5;
 
+var templateHTML;
+
+function stringToHTML(str) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(str, 'text/html');
+    return doc.body;
+};
+
+function loadHTML() {
+    fetch('./template.html').then(function (response) {
+        return response.text();
+    }).then(function (html) {
+        templateHTML = stringToHTML(html);
+    }).catch(function (err) {
+        console.warn('Something went wrong.', err);
+    });
+}
+
 function preload() {
-    settings.menuJsonPattern = loadJSON("./sideMenu.json", () => {
-        console.log("Plik JSON załadowany pomyślnie!");
-    }, () => {
-        alert("Wystąpił bład! Nastąpi przekierowanie do strony głównej!");
-        window.location.href = "https://mzmix.github.io/";
-    }, "json")
+
+    var templatka, clone, insert;
+
+    fetch('./template.html').then(function (response) {
+        return response.text();
+    }).then(function (html) {
+        templateHTML = stringToHTML(html);
+
+        templatka = templateHTML.querySelector("#sidebar");
+        clone = templatka.content.cloneNode(true);
+        insert = clone.querySelector(".sidebar-content");
+
+        select("#sidebarContentHolder").child(insert);
+
+    }).catch(function (err) {
+        console.warn('Something went wrong.', err);
+    });
 }
 
 Number.prototype.between = function (a, b) {
@@ -49,118 +78,7 @@ class UserInterface {
         let sizeH = settings.squareSize * (settings.squaresBySideH + 2) + 11 * settings.squareSpacer + 6;
         this.canvas = createCanvas(sizeW, sizeH).parent(select('.canvasDiv'));
 
-        this.generateSideMenu();
-
         return this;
-    }
-
-    generateSideMenu() {
-        try {
-            const data = settings.menuJsonPattern;
-
-            //Obiekt przechowujący elementy menu
-            const SideMenu = {};
-            Object.keys(data).forEach((key) => {
-                SideMenu[key] = '';
-            });
-
-            Object.keys(SideMenu).forEach((element) => {
-                let el, sectionContent;
-
-                // print(data[element][0]);
-
-                switch (data[element][0].type) {
-                    case "menuHeader":
-                        sectionContent = data[element][0].content;
-
-                        if (/\<(.*?)\>/.test(sectionContent) && /\((.*?)\)/.test(sectionContent)) {
-                            sectionContent = createA(content.match(/\<(.*?)\>/)[1], content.match(/\((.*?)\)/)[1]);
-                        } else {
-                            sectionContent = createSpan(sectionContent);
-                        }
-
-                        el = createElement('h3');
-                        el.child(sectionContent)
-
-                        if (data[element][0].class) el.addClass(data[element][0].class)
-                        el.parent(select('.sidebar-header'));
-
-                        break;
-
-                    case "menuContent":
-                        sectionContent = data[element][0].content;
-
-                        for (const [name, action] of Object.entries(sectionContent)) {
-                            let title = action[0];
-                            let fxn = action[1];
-
-                            let a = createA(`#submenu${name}`, `${name}`);
-
-                            a.addClass("dropdown-toggle");
-                            a.attribute("data-toggle", "collapse");
-                            a.attribute("aria-expanded", "false");
-
-                            a.parent(select(".sidebar-content"));
-
-                            let ul = createElement("ul");
-                            ul.addClass("collapse");
-                            ul.addClass("list-unstyled");
-                            ul.id(`submenu${name}`);
-
-
-                            if (title.length != fxn.length) {
-                                throw "JSON Syntax error! See documentation for help."
-                            }
-
-                            for (let i = 0; i < title.length; i++) {
-                                let e = createElement("li");
-
-                                let anch = createA("#", title[i]);
-                                anch.attribute("onclick", fxn[i]);
-                                anch.parent(e);
-
-                                e.addClass("menuOption");
-
-                                if (fxn[i].includes("action.showModal(")) {
-                                    anch.attribute("data-toggle", "modal")
-                                    anch.attribute("data-target", "#modal")
-                                }
-
-                                e.parent(ul);
-                            }
-
-                            ul.parent(select(".sidebar-content"));
-                        }
-
-
-                        break;
-
-                    case "menuFooter":
-                        sectionContent = data[element][0].content;
-
-                        if (/\<(.*?)\>/.test(sectionContent) && /\((.*?)\)/.test(sectionContent)) {
-                            sectionContent = createA(sectionContent.match(/\<(.*?)\>/)[1], sectionContent.match(/\((.*?)\)/)[1]);
-                        } else {
-                            sectionContent = createSpan(sectionContent);
-                        }
-
-                        el = createElement('h3');
-                        el.child(sectionContent)
-
-                        if (data[element][0].class) el.addClass(data[element][0].class)
-                        el.parent(select('.sidebar-footer'));
-                        break;
-
-                    default:
-                        throw new Error("Bład w składni pliku sideMenu.json");
-                }
-
-            });
-
-        } catch (e) {
-            console.error(e);
-        }
-
     }
 
     generateBoard() {

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<body>
+
+    <template id="sidebar">
+
+        <div class="sidebar-content">
+
+            <a href="#submenuPlansza" class="dropdown-toggle" data-toggle="collapse" aria-expanded="false">Plansza</a>
+            <ul class="collapse list-unstyled" id="submenuPlansza">
+                <li class="menuOption"><a href="#" onclick="action.resetBoard()">Reset planszy</a></li>
+                <li class="menuOption"><a href="#" onclick="action.resetIndex()">Reset opisów pól</a></li>
+                <li class="menuOption"><a href="#" onclick="action.hideSegmentContent()">Przełącz oznaczenia pól</a>
+                </li>
+            </ul><a href="#submenuUdostępnianie" class="dropdown-toggle" data-toggle="collapse"
+                aria-expanded="false">Udostępnianie</a>
+            <ul class="collapse list-unstyled" id="submenuUdostępnianie">
+                <li class="menuOption"><a href="#" onclick="action.saveImg()">Zapis planszy do pliku</a></li>
+                <li class="menuOption"><a href="#" onclick="action.saveColorSets()">Zapis zestawów kolorów do pliku</a>
+                </li>
+            </ul><a href="#submenuDostosowywanie" class="dropdown-toggle" data-toggle="collapse"
+                aria-expanded="false">Dostosowywanie</a>
+            <ul class="collapse list-unstyled" id="submenuDostosowywanie">
+                <li class="menuOption"><a href="#" onclick="action.showModal('changeColorSet')" data-toggle="modal"
+                        data-target="#modal">Zestawy kolorów</a></li>
+                <li class="menuOption"><a href="#" onclick="action.showModal('changeSegmentSize')" data-toggle="modal"
+                        data-target="#modal">Zmiana wielkości pól</a></li>
+                <li class="menuOption"><a href="#" onclick="action.showModal('loadColorsFromFile')" data-toggle="modal"
+                        data-target="#modal">Wczytaj zapisane kolory</a></li>
+            </ul>
+        </div>
+
+    </template>
+
+    <template class="modal" id="changeColorSet">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalLabel">Zestawy kolorów</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+
+                <div class="footerLeft col-6 text-left">
+                    <button type="button" class="ownColors btn btn-info btn-sm order-1" data-dismiss="modal"
+                        onclick="action.showModal('addCustomColorSet')">Dodaj własny zestaw kolorów</button>
+                </div>
+                <div class="footerRight col-6 text-right">
+                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal">Zamknij</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+    <template class="modal" id="changeSegmentSize">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalLabel">Zmiana wielkości pól</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+                <label for="form-control-range">Zmień wielkość pól</label>
+                <span id="sliderSlot"></span>
+                <p id="scaleP">Skala: 100%</p>
+            </div>
+            <div class="modal-footer">
+                <div class="footerRight col-6 text-right">
+                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal">Zamknij</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+    <template class="modal" id="addCustomColorSet">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalLabel">Dodaj zestaw kolorów</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <div class="footerLeft col-6 text-left">
+                </div>
+                <div class="footerRight col-6 text-right">
+                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal"
+                        onclick="userInterface.addCustomColorSet()">Zapisz</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+    <template class="modal" id="loadColorsFromFile">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalLabel">Wczytaj zapisane zestawy kolorów</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <div class="footerRight col-6 text-right">
+                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal"
+                        onclick="userInterface.loadSave()">Wczytaj zapis</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+</body>
+
+</html>

@@ -2,8 +2,6 @@ let loadedFile;
 
 function handleFile(file) {
 
-    loadedFile = file;
-
     if (file.type == 'application' && file.subtype == 'json') {
 
         let fileData = file.data;
@@ -117,44 +115,37 @@ function addMethodsToObjects() {
 
     action.showModal = function (value) {
         let el;
-
-        if (select(".ownColors")) select(".ownColors").remove();
-        select('.modalBtn').removeAttribute('onclick');
-        select('.modalBtn').html('Zamknij');
+        select(".modal-dialog").html("");
 
         switch (value) {
             case 'changeColorSet':
+
+                templatka = templateHTML.querySelector("#changeColorSet");
+                clone = templatka.content.cloneNode(true);
+                insert = clone.querySelector(".modal-content");
+                select(".modal-dialog").child(insert);
+
                 this.refreshColorSets();
-
-                select(".modal-title").html("Zestawy kolorów");
-
-                if (!select(".ownColors")) {
-                    let ownScheme = createButton('Dodaj własny zestaw kolorów');
-                    ownScheme.addClass("ownColors btn btn-info btn-sm order-1");
-                    ownScheme.attribute('onclick', "action.showModal('addCustomColorSet')");
-                    ownScheme.parent(select(".footerLeft"));
-                }
 
                 el = createSelect();
                 el.option("Domyślny");
-
                 for (let i = 0; i < settings.colorSchemes.length - 1; i++) {
                     el.option(`Zestaw ${i+1}`);
                 }
-
                 if (settings.currentColorScheme) el.value(settings.currentColorScheme);
-
                 el.addClass("custom-select switchColorScheme");
-
                 el.changed(this.switchColorScheme);
-
                 select(".modal-body").html("");
                 select(".modal-body").child(el);
 
                 break;
 
             case 'changeSegmentSize':
-                select(".modal-title").html("Wielkość pól");
+
+                templatka = templateHTML.querySelector("#changeSegmentSize");
+                clone = templatka.content.cloneNode(true);
+                insert = clone.querySelector(".modal-content");
+                select(".modal-dialog").child(insert);
 
                 el = createSlider(0.5, 1.5, settings.skalar, 0.10);
                 el.addClass("form-control-range");
@@ -175,27 +166,17 @@ function addMethodsToObjects() {
 
                     select("#scaleP").html(`Skala: ${floor(settings.skalar * 100)}%`);
                 })
-
-                let label = createElement("label", "Zmień wielkość pól")
-                label.attribute("for", "form-control-range");
-
-                let p = createP(`Skala: ${floor(settings.skalar * 100)}%`);
-                p.attribute("id", "scaleP");
-
-                select(".modal-body").html("");
-                select(".modal-body").child(label);
-                select(".modal-body").child(el);
-                select(".modal-body").child(p);
+                select("#sliderSlot").child(el);
 
                 break;
 
             case 'addCustomColorSet':
                 $('#modal').modal('show');
-                select(".modal-title").html("Dodaj zestaw kolorów");
-                select(".modal-body").html("");
 
-                select(".modalBtn").html("Zapisz");
-                select(".modalBtn").attribute('onclick', 'userInterface.addCustomColorSet()');
+                templatka = templateHTML.querySelector("#addCustomColorSet");
+                clone = templatka.content.cloneNode(true);
+                insert = clone.querySelector(".modal-content");
+                select(".modal-dialog").child(insert);
 
                 for (let col of settings.colorMatrix) {
 
@@ -214,13 +195,14 @@ function addMethodsToObjects() {
 
             case 'loadColorsFromFile':
                 $('#modal').modal('show');
-                select(".modal-title").html("Wczytaj zestawy kolorów");
-                select(".modal-body").html("");
 
-                select(".modalBtn").html("Wczytaj zapis");
-                select(".modalBtn").attribute('onclick', 'userInterface.loadSave()');
+                templatka = templateHTML.querySelector("#loadColorsFromFile");
+                clone = templatka.content.cloneNode(true);
+                insert = clone.querySelector(".modal-content");
+                select(".modal-dialog").child(insert);
 
                 let input = createFileInput(handleFile, false);
+                input.attribute("accept", "application/json");
 
                 select(".modal-body").child(input);
 
