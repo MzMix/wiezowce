@@ -3,151 +3,394 @@
 
 <head>
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+	</script>
+	<script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta charset="utf-8" />
 	<meta author="Mikołaj Zuziak">
 	<title>Klockiem w matematykę!</title>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"
+		integrity="sha512-gQVBYBvfC+uyor5Teonjr9nmY1bN+DlOCezkhzg4ShpC5q81ogvFsr5IV4xXAj6HEtG7M1Pb2JCha97tVFItYQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="./main.js"></script>
+
 	<script>
 		window.onbeforeunload = function () {
-			return 'Are you sure you want to leave?';
+			if (!getURL().includes("localhost")) return 'Are you sure you want to leave?';
 		};
 	</script>
 
 </head>
 
 <body>
-	<!-- usuwanie napisu Loading -->
-	<div id="p5_loading"></div>
+	<main>
+		<!-- usuwanie napisu Loading -->
+		<div id="p5_loading"></div>
 
-	<div class="content">
+		<!-- LOGO -->
 		<div class="container-fluid">
-			<!-- Title -->
-			<div class="row titleRow">
-				<div class="col-12 title noPadding text-center">
-					<h1 class="display-3">Klockiem w&nbsp;matematykę!</h1>
+			<div class="row bg-primary">
+				<div class="col-12 h2 fw-bold bg-primary text-white pageTitle">
+					<p class="float-start" style="margin-left: 1%;">Klockiem w matematykę</p>
+					<p class="float-end" style="margin-right: 1%;">Klockowe wieżowce</p>
 				</div>
 			</div>
-			<!--row Title-->
 
-			<!-- Header -->
-			<div class="row headerRow">
-				<div class="col-12 header noPadding">
-					<h4>Klockowe wieżowce</h4>
-				</div>
-			</div>
-			<!--row Header-->
+			<nav>
+				<div class="row subtleOpacity">
+					<div class="col-12">
+						<ul class="nav float-start">
+							<li class="nav-item">
+								<a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#ustawieniaPanel"
+									role="button" aria-controls="ustawieniaPanel"><span data-bs-toggle="tooltip"
+										data-bs-placement="bottom"
+										title="Otwiera okno umożliwiające zmienianie ustawień aplikacji">Ustawienia<span
+											class="text-secondary">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+												<path
+													d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+											</svg></span></span></a>
+							</li>
 
-			<!-- Sidebar open btn -->
-			<div id="content" class="navBtnDiv">
-				<nav class="navbar navbar-expand-lg navbar-light">
-					<div class="container-fluid">
-						<button type="button" id="sidebarCollapse" class="btn btn-info green ">
-							<span class="navbar-toggler-icon"></span>
-						</button>
+							<li class="nav-item">
+								<a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+									role="button" aria-controls="offcanvasRight"><span data-bs-toggle="tooltip"
+										data-bs-placement="right"
+										title="Otwiera okno zawierające dostępną paletę kolorów">Paleta
+										barw<span class="text-secondary">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-palette-fill" viewBox="0 0 16 16">
+												<path
+													d="M12.433 10.07C14.133 10.585 16 11.15 16 8a8 8 0 1 0-8 8c1.996 0 1.826-1.504 1.649-3.08-.124-1.101-.252-2.237.351-2.92.465-.527 1.42-.237 2.433.07zM8 5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm4.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+											</svg></span></span></a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" role="button" data-bs-toggle="modal" data-bs-target="#sharingModal"
+									data-bs-dismiss="offcanvas" aria-label="Close" onclick="updateDate()"><span
+										data-bs-toggle="tooltip" data-bs-placement="right"
+										title="Otwiera okno umożliwiające udostępnianie zasobów stworzonych w aplikacji">Udostępnianie<span
+											class="text-secondary">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+												<path
+													d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
+											</svg></span></span></a>
+							</li>
+
+						</ul>
+						<ul class="nav float-end ">
+							<li class="nav-item">
+								<a class="nav-link" href="https://mzmix.github.io/" target="_blank">Strona Główna<span
+										class="text-secondary">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+											<path fill-rule="evenodd"
+												d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+											<path fill-rule="evenodd"
+												d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+										</svg></span></a>
+							</li>
+						</ul>
 					</div>
-				</nav>
-			</div>
-			<!-- Sidebar open btn end -->
+				</div>
+			</nav>
+		</div>
+
+		<!-- PLANSZA -->
+
+		<div class="container" id="mainContentContainer">
 
 			<div class="row">
-				<div class="col-12">
-					<div class="canvasDiv top-buffer text-center"></div>
-				</div>
-			</div>
 
-			<!-- Footer -->
-			<div class="row fixed-bottom">
-				<div class="col-sm-12 footer">
-					<h5>Klockiem w matematykę! 2018 - 2021 | Klockowe wieżowce | Wersja: 1.4 z dnia: 29.05.2021
+				<div class="col-md-2 col-sm-1"></div>
+
+				<div class="col-md-8 col-sm-10">
+					<div class="boardContainer mt-md-1 mt-sm-5"></div>
 				</div>
+
+				<div class=" col-md-2 col-sm-1"></div>
+
 			</div>
-			<!-- Footer end -->
 
 		</div>
-		<!--container end-->
+
+	</main>
+
+	<!-- STOPKA -->
+	<footer class="footer py-3 bg-light fixed-bottom">
+		<div class="container text-center">
+			<span class="text-muted font-monospace">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bricks"
+					viewBox="0 0 16 16">
+					<path
+						d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5v-3zM3 4v2h4.5V4H3zm5.5 0v2H13V4H8.5zM3 10v2h4.5v-2H3zm5.5 0v2H13v-2H8.5zM1 1v2h3.5V1H1zm4.5 0v2h5V1h-5zm6 0v2H15V1h-3.5zM1 7v2h3.5V7H1zm4.5 0v2h5V7h-5zm6 0v2H15V7h-3.5zM1 13v2h3.5v-2H1zm4.5 0v2h5v-2h-5zm6 0v2H15v-2h-3.5z" />
+				</svg>
+				Klockiem w matematykę! 2018 - <span id="yearInsert">2021</span> | Klockowe wieżowce | Wersja: 2.0 z
+				dnia: 15.06.2021
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bricks"
+					viewBox="0 0 16 16">
+					<path
+						d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5v-3zM3 4v2h4.5V4H3zm5.5 0v2H13V4H8.5zM3 10v2h4.5v-2H3zm5.5 0v2H13v-2H8.5zM1 1v2h3.5V1H1zm4.5 0v2h5V1h-5zm6 0v2H15V1h-3.5zM1 7v2h3.5V7H1zm4.5 0v2h5V7h-5zm6 0v2H15V7h-3.5zM1 13v2h3.5v-2H1zm4.5 0v2h5v-2h-5zm6 0v2H15v-2h-3.5z" />
+				</svg>
+			</span>
+		</div>
+	</footer>
+
+	<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+		id="ustawieniaPanel" aria-labelledby="Panel ustawień aplikacji">
+		<div class="offcanvas-header border-bottom">
+			<h5 id="offcanvas-title">Ustawienia aplikacji <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+					fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+					<path
+						d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+				</svg></h5>
+			<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+
+			<button type="button" class="btn btn-outline-primary mb-3" onclick="toggleFulscreen()"><span
+					data-bs-toggle="tooltip" data-bs-placement="right"
+					title="Przełączenie trybu pełnego ekranu - włącz/wyłącz">Przełącz tryb pełnego
+					ekranu</span></button>
+
+			<label for="indexContentSelect" class="mb-1">Zmiana opisu pól:</label>
+			<select class="form-select mb-3" id="indexContentSelect" aria-label="Wybieranie opisu pól"
+				onchange="board.changeIndex()">
+				<option selected>Zmień opis pól planszy</option>>
+				<option value="1">Brak opisu</option>
+				<option value="2">Numeracja</option>
+				<option value="3">Adresowanie</option>
+				<option value="4">Kolory</option>
+			</select>
+
+			<div class="border border-bottom mb-3"></div>
+
+			<button type="button" class="btn btn-lg btn-outline-danger mb-3" onclick="resetApp()"><span
+					data-bs-toggle="tooltip" data-bs-placement="right" title="Czyści planszę z kolorów i zawartości
+					pól, przywraca domyślne opisy">Reset planszy <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+						fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+						<path
+							d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+						<path
+							d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+					</svg></span></button>
+		</div>
 
 	</div>
-	<!-- Content end -->
 
-	<!-- Wrapper -->
-	<div class="wrapper">
-		<!-- Sidebar -->
-		<div id="sidebar" class="disabled">
-			<div class="sidebar-header"> <button type="button" class="close" aria-label="Close"
-					onclick="$('#sidebar').toggleClass('disabled');">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h3><span>Ustawienia aplikacji</span></h3>
-			</div>
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" data-bs-scroll="true"
+		data-bs-backdrop="false" aria-labelledby="offcanvasRightLabel">
+		<div class="offcanvas-header border-bottom">
+			<h5 id="offcanvas-title">Paleta barw <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+					fill="currentColor" class="bi bi-palette-fill" viewBox="0 0 16 16">
+					<path
+						d="M12.433 10.07C14.133 10.585 16 11.15 16 8a8 8 0 1 0-8 8c1.996 0 1.826-1.504 1.649-3.08-.124-1.101-.252-2.237.351-2.92.465-.527 1.42-.237 2.433.07zM8 5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm4.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+				</svg></h5>
+			<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body text-center">
+			<select class="form-select mb-3" id="colorSelectForm" aria-label="Wybieranie zestawu kolorów"
+				onchange="colorContainer.switchColorSet()">
+			</select>
 
-			<span id=sidebarContentHolder></span>
+			<!-- <span id="colorConatiner"></span> -->
 
-			<div class="sidebar-footer">
-				<h3><a href="https://mzmix.github.io/">Strona Główna</a></h3>
-			</div>
+			<div class="border border-bottom mb-3"></div>
 
-			<!-- Sidebar end -->
+			<button type=" button" class="btn btn-danger mb-3" onclick="handleClearBoard()"> <span
+					data-bs-toggle="tooltip" data-bs-placement="bottom" title="Czyści planszę">Wyczyść
+					plaszę <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+						<path
+							d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+						<path
+							d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+					</svg></span></button>
+
+			<button type="button" class="btn btn-primary mb-3" onclick="encodeBoard()" data-bs-toggle="modal"
+				data-bs-target="#encodedBoardModal" data-bs-dismiss="offcanvas" aria-label="Close"><span
+					data-bs-toggle="tooltip" data-bs-placement="bottom"
+					title="Otwiera okno zawierające opis zakodowanej planszy">Zakoduj
+					planszę</span></button>
+
+			<button type="button" class="btn btn-primary mb-3" onclick="colorSets.displayColorSetModal()"
+				data-bs-toggle="modal" data-bs-target="#customColorSetModal" data-bs-dismiss="offcanvas"
+				aria-label="Close"><span data-bs-toggle="tooltip" data-bs-placement="bottom"
+					title="Otwiera okno umożliwiające dodanie własnego zestawu kolorów">Dodaj własny
+					zestaw kolorów</span></button>
+
+			<button type="button" class="btn btn-primary mb-3" onclick="prepareColorSetFileInput()"
+				data-bs-toggle="modal" data-bs-target="#loadingColorSetModal" data-bs-dismiss="offcanvas"
+				aria-label="Close"><span data-bs-toggle="tooltip" data-bs-placement="bottom"
+					title="Otwiera okno umożliwiające wczytanie pliku zawierającego zestawy kolorów">Wczytaj zapisane
+					zestawy kolorów</span></button>
+
+			<button type="button" class="btn btn-success mb-3" onclick="randomizeBoard()"><span data-bs-toggle="tooltip"
+					data-bs-placement="bottom"
+					title="Wypełnia planszę losowymi kolorami z wybranego zestawu kolorów">Wypełnij planszę
+					losowymi kolorami</span></button>
 
 		</div>
+	</div>
 
-		<!-- Modal -->
-		<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document"></div>
+	<div class="modal fade" id="customColorSetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Dodaj własny zestaw kolorów</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<label for="newSetName" class="form-label">Nazwa zestawu:</label>
+					<input type="text" class="form-control" id="newSetName">
+
+					<span id="customColorModalBody" class=" text-center"></span>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Anuluj <svg
+							xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+							<path
+								d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+							<path
+								d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+						</svg></button>
+					<button type="button" class="btn btn-primary" onclick="colorSets.addCustomColorSet()">Zapisz nowy
+						zestaw <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-check2-circle" viewBox="0 0 16 16">
+							<path
+								d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+							<path
+								d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+						</svg></button>
+				</div>
+			</div>
 		</div>
-		<!-- Modal end -->
+	</div>
 
-		<!-- Wrapper end -->
+	<div class="modal fade" id="sharingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Udostępnianie <svg
+							xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-share-fill" viewBox="0 0 16 16">
+							<path
+								d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
+						</svg></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
 
-		<!-- Bootstrap Js:  -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-			integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-		</script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-		</script>
+					<label for="colorSetFileNameInput" class="mb-2">Eksport zestawów kolorów do pliku:</label>
+					<div class="input-group mb-3">
+						<button type="button" class="btn btn-outline-primary btn-sm m-2"
+							onclick="generateColorSetsSave()" id="colorSetExportBtn">Eksportuj zestawy kolorów</button>
+						<input type="text" class="form-control form-control-sm updatedDateInsert"
+							id="colorSetFileNameInput" data-nameStart="zapisaneKolory-" value="zapisaneKolory-">
+						<span class="input-group-text">.json</span>
+					</div>
 
-		<script>
-			//Obsługa sidebara
-			function changePosition() {
-				let pos = $('.titleRow').height() + $('.headerRow').height();
-				$("#sidebar").css({
-					top: pos,
-					position: 'fixed'
-				});
+					<div class="border border-bottom mb-3"></div>
 
-				$(".navBtnDiv").css({
-					top: pos,
-					position: 'fixed'
-				});
-			}
+					<label for="boardSaveScreenShotNameInput" class="mb-2">Zapisz zrzut ekranu planszy: </label>
+					<div class="input-group mb-3">
+						<button type="button" class="btn btn-outline-primary btn-sm m-2"
+							onclick='generateScreenShot("boardContainer")' id="boardScreenShotExportBtn">Zapisz zrzut
+							ekranu</button>
+						<input type="text" class="form-control form-control-sm updatedDateInsert"
+							id="boardSaveScreenShotNameInput" data-nameStart="plansza-" value="plansza-">
+						<span class="input-group-text">.png</span>
+					</div>
 
-			$(document).ready(() => {
-				changePosition();
+					<div class="border border-bottom mb-3"></div>
 
-				$('#sidebarCollapse').on('click', () => {
-					changePosition();
-					$('#sidebar').toggleClass('disabled');
-				});
-			});
+					<label for="boardSharingUrlOutput" class="mb-2">Wygeneruj link do udostępnienia planszy:</label>
+					<div class="input-group mb-3">
+						<button type="button" class="btn btn-outline-primary btn-sm m-2" onclick="prepareSharingLink()"
+							id="urlExportBtn">Wygeneruj link</button>
+						<input type="text" readonly class="form-control form-control-sm" id="boardSharingUrlOutput"
+							value="Wygeneruj link">
+						<a type="button" class="input-group-text" id="urlSharingBtn" target="_blank"><svg
+								xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-link-45deg" viewBox="0 0 16 16">
+								<path
+									d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
+								<path
+									d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" />
+							</svg></a>
+					</div>
 
-			$(window).on('resize', () => {
-				changePosition();
-			});
-		</script>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Zamknij</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		<!-- Custom Js: -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js"></script>
-		<script src="core.js"></script>
-		<script src="settings.js"></script>
-		<script src="sketch.js"></script>
+	<div class="modal fade" id="loadingColorSetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Wczytaj zapisane zestawy kolorów</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="input-group mb-3" id="colorSetsFileInputContainer">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Zamknij</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="encodedBoardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Zakodowana plansza</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="colorDescriptionModalBody">
+					<div class="input-group mb-3" id="colorSetsFileInputContainer" data-html2canvas-ignore>
+						<input type="text" class="form-control form-control-sm updatedDateInsert"
+							id="colorDescriptionNameInput" data-nameStart="zakodowanaPlansza-"
+							value="zakodowanaPlansza-">
+						<span class="input-group-text">.png</span>
+					</div>
+
+					<span id="colorDescription"></span>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal"
+						onclick="generateScreenShot('colorDescription')">Pobierz</button>
+					<button type="button" class="btn btn-outline-primary btn-sm"
+						data-bs-dismiss="modal">Zamknij</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 

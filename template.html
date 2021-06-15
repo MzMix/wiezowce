@@ -3,150 +3,444 @@
 
 <body>
 
-    <template id="sidebar">
+    <template id="board">
+        <div class="boardContainer">
 
-        <div class="sidebar-content">
-
-            <a href="#submenuPlansza" class="dropdown-toggle" data-toggle="collapse" aria-expanded="false">Plansza</a>
-            <ul class="collapse list-unstyled" id="submenuPlansza">
-                <li class="menuOption"><a href="#" onclick="action.resetBoard()">Reset planszy</a></li>
-                <li class="menuOption"><a href="#" onclick="action.resetIndex()">Reset opisów pól</a></li>
-                <li class="menuOption"><a href="#" onclick="action.hideSegmentContent()">Przełącz oznaczenia pól</a>
-                </li>
-            </ul><a href="#submenuUdostępnianie" class="dropdown-toggle" data-toggle="collapse"
-                aria-expanded="false">Udostępnianie</a>
-            <ul class="collapse list-unstyled" id="submenuUdostępnianie">
-                <li class="menuOption"><a href="#" onclick="action.saveImg()">Zapis planszy do pliku</a></li>
-                <li class="menuOption"><a href="#" onclick="action.saveColorSets()">Zapis zestawów kolorów do pliku</a>
-                </li>
-            </ul><a href="#submenuDostosowywanie" class="dropdown-toggle" data-toggle="collapse"
-                aria-expanded="false">Dostosowywanie</a>
-            <ul class="collapse list-unstyled" id="submenuDostosowywanie">
-                <li class="menuOption"><a href="#" onclick="action.showModal('changeColorSet')" data-toggle="modal"
-                        data-target="#modal">Zestawy kolorów</a></li>
-                <li class="menuOption"><a href="#" onclick="action.showModal('changeSegmentSize')" data-toggle="modal"
-                        data-target="#modal">Zmiana wielkości pól</a></li>
-                <li class="menuOption"><a href="#" onclick="action.showModal('loadColorsFromFile')" data-toggle="modal"
-                        data-target="#modal">Wczytaj zapisane kolory</a></li>
-            </ul>
+            <div class="boardCell indexCell" id="boardCell0">
+                <div class="contentBox">0</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell1">
+                <div class="contentBox">1</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell2">
+                <div class="contentBox">2</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell3">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell4">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell5">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell6">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell7">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell8">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell9">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell10">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell11">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell12">
+                <div class="contentBox">1</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell13" onclick="board.handleBoardClick(13)">
+                <div class="contentBox">1</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell14" onclick="board.handleBoardClick(14)">
+                <div class="contentBox">2</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell15" onclick="board.handleBoardClick(15)">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell16" onclick="board.handleBoardClick(16)">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell17" onclick="board.handleBoardClick(17)">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell18" onclick="board.handleBoardClick(18)">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell19" onclick="board.handleBoardClick(19)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell20" onclick="board.handleBoardClick(20)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell21" onclick="board.handleBoardClick(21)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell22" onclick="board.handleBoardClick(22)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell23">
+                <div class="contentBox">1</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell24">
+                <div class="contentBox">2</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell25" onclick="board.handleBoardClick(25)">
+                <div class="contentBox">2</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell26" onclick="board.handleBoardClick(26)">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell27" onclick="board.handleBoardClick(27)">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell28" onclick="board.handleBoardClick(28)">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell29" onclick="board.handleBoardClick(29)">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell30" onclick="board.handleBoardClick(30)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell31" onclick="board.handleBoardClick(31)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell32" onclick="board.handleBoardClick(32)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell33" onclick="board.handleBoardClick(33)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell34" onclick="board.handleBoardClick(34)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell35">
+                <div class="contentBox">2</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell36">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell37" onclick="board.handleBoardClick(37)">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell38" onclick="board.handleBoardClick(38)">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell39" onclick="board.handleBoardClick(39)">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell40" onclick="board.handleBoardClick(40)">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell41" onclick="board.handleBoardClick(41)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell42" onclick="board.handleBoardClick(42)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell43" onclick="board.handleBoardClick(43)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell44" onclick="board.handleBoardClick(44)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell45" onclick="board.handleBoardClick(45)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell46" onclick="board.handleBoardClick(46)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell47">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell48">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell49" onclick="board.handleBoardClick(49)">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell50" onclick="board.handleBoardClick(50)">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell51" onclick="board.handleBoardClick(51)">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell52" onclick="board.handleBoardClick(52)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell53" onclick="board.handleBoardClick(53)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell54" onclick="board.handleBoardClick(54)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell55" onclick="board.handleBoardClick(55)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell56" onclick="board.handleBoardClick(56)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell57" onclick="board.handleBoardClick(57)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell58" onclick="board.handleBoardClick(58)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell59">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell60">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell61" onclick="board.handleBoardClick(61)">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell62" onclick="board.handleBoardClick(62)">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell63" onclick="board.handleBoardClick(63)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell64" onclick="board.handleBoardClick(64)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell65" onclick="board.handleBoardClick(65)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell66" onclick="board.handleBoardClick(66)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell67" onclick="board.handleBoardClick(67)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell68" onclick="board.handleBoardClick(68)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell69" onclick="board.handleBoardClick(69)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell70" onclick="board.handleBoardClick(70)">
+                <div class="contentBox">14</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell71">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell72">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell73" onclick="board.handleBoardClick(73)">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell74" onclick="board.handleBoardClick(74)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell75" onclick="board.handleBoardClick(75)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell76" onclick="board.handleBoardClick(76)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell77" onclick="board.handleBoardClick(77)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell78" onclick="board.handleBoardClick(78)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell79" onclick="board.handleBoardClick(79)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell80" onclick="board.handleBoardClick(80)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell81" onclick="board.handleBoardClick(81)">
+                <div class="contentBox">14</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell82" onclick="board.handleBoardClick(82)">
+                <div class="contentBox">15</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell83">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell84">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell85" onclick="board.handleBoardClick(85)">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell86" onclick="board.handleBoardClick(86)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell87" onclick="board.handleBoardClick(87)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell88" onclick="board.handleBoardClick(88)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell89" onclick="board.handleBoardClick(89)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell90" onclick="board.handleBoardClick(90)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell91" onclick="board.handleBoardClick(91)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell92" onclick="board.handleBoardClick(92)">
+                <div class="contentBox">14</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell93" onclick="board.handleBoardClick(93)">
+                <div class="contentBox">15</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell94" onclick="board.handleBoardClick(94)">
+                <div class="contentBox">16</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell95">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell96">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell97" onclick="board.handleBoardClick(97)">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell98" onclick="board.handleBoardClick(98)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell99" onclick="board.handleBoardClick(99)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell100" onclick="board.handleBoardClick(100)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell101" onclick="board.handleBoardClick(101)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell102" onclick="board.handleBoardClick(102)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell103" onclick="board.handleBoardClick(103)">
+                <div class="contentBox">14</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell104" onclick="board.handleBoardClick(104)">
+                <div class="contentBox">15</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell105" onclick="board.handleBoardClick(105)">
+                <div class="contentBox">16</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell106" onclick="board.handleBoardClick(106)">
+                <div class="contentBox">17</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell107">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell108">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell109" onclick="board.handleBoardClick(109)">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell110" onclick="board.handleBoardClick(110)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell111" onclick="board.handleBoardClick(111)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell112" onclick="board.handleBoardClick(112)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell113" onclick="board.handleBoardClick(113)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell114" onclick="board.handleBoardClick(114)">
+                <div class="contentBox">14</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell115" onclick="board.handleBoardClick(115)">
+                <div class="contentBox">15</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell116" onclick="board.handleBoardClick(116)">
+                <div class="contentBox">16</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell117" onclick="board.handleBoardClick(117)">
+                <div class="contentBox">17</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell118" onclick="board.handleBoardClick(118)">
+                <div class="contentBox">18</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell119">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell120">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell121" onclick="board.handleBoardClick(121)">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell122" onclick="board.handleBoardClick(122)">
+                <div class="contentBox">11</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell123" onclick="board.handleBoardClick(123)">
+                <div class="contentBox">12</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell124" onclick="board.handleBoardClick(124)">
+                <div class="contentBox">13</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell125" onclick="board.handleBoardClick(125)">
+                <div class="contentBox">14</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell126" onclick="board.handleBoardClick(126)">
+                <div class="contentBox">15</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell127" onclick="board.handleBoardClick(127)">
+                <div class="contentBox">16</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell128" onclick="board.handleBoardClick(128)">
+                <div class="contentBox">17</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell129" onclick="board.handleBoardClick(129)">
+                <div class="contentBox">18</div>
+            </div>
+            <div class="boardCell contentCell" id="boardCell130" onclick="board.handleBoardClick(130)">
+                <div class="contentBox">19</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell131">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell132">
+                <div class="contentBox">0</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell133">
+                <div class="contentBox">1</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell134">
+                <div class="contentBox">2</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell135">
+                <div class="contentBox">3</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell136">
+                <div class="contentBox">4</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell137">
+                <div class="contentBox">5</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell138">
+                <div class="contentBox">6</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell139">
+                <div class="contentBox">7</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell140">
+                <div class="contentBox">8</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell141">
+                <div class="contentBox">9</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell142">
+                <div class="contentBox">10</div>
+            </div>
+            <div class="boardCell indexCell" id="boardCell143">
+                <div class="contentBox">11</div>
+            </div>
         </div>
-
     </template>
 
-    <template class="modal" id="changeColorSet">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="modalLabel">Zestawy kolorów</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-            </div>
-
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-
-                <div class="footerLeft col-6 text-left">
-                    <button type="button" class="ownColors btn btn-info btn-sm order-1" data-dismiss="modal"
-                        onclick="action.showModal('addCustomColorSet')">Dodaj własny zestaw kolorów</button>
-                </div>
-                <div class="footerRight col-6 text-right">
-                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal">Zamknij</button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </template>
-
-    <template class="modal" id="changeSegmentSize">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="modalLabel">Zmiana wielkości pól</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-                <label for="form-control-range">Zmień wielkość pól</label>
-                <span id="sliderSlot"></span>
-                <p id="scaleP">Skala: 100%</p>
-            </div>
-            <div class="modal-footer">
-                <div class="footerRight col-6 text-right">
-                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal">Zamknij</button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </template>
-
-    <template class="modal" id="addCustomColorSet">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="modalLabel">Dodaj zestaw kolorów</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <div class="footerLeft col-6 text-left">
-                </div>
-                <div class="footerRight col-6 text-right">
-                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal"
-                        onclick="userInterface.addCustomColorSet()">Zapisz</button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </template>
-
-    <template class="modal" id="loadColorsFromFile">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="modalLabel">Wczytaj zapisane zestawy kolorów</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <div class="footerRight col-6 text-right">
-                    <button type="button" class="btn btn-primary order-2 modalBtn" data-dismiss="modal"
-                        onclick="userInterface.loadSave()">Wczytaj zapis</button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </template>
 </body>
 
 </html>
