@@ -37,7 +37,6 @@ class Board {
         let boardCell = select(`#boardCell${cellID}`);
 
         let newColorAndValue = Number(boardCell.attribute('data-colorNumber'));
-        print(newColorAndValue);
         newColorAndValue += 1;
         newColorAndValue = newColorAndValue % 5;
 
@@ -45,16 +44,20 @@ class Board {
     }
 
     colorCell(cellID, colorNumber) {
+        let number = colorNumber;
         let boardCell = select(`#boardCell${cellID}`);
         let color = colorSets[`colorSet${colorContainer.colorSetId}`][colorNumber];
         let textInsert = colorNumber + 1;
 
-        if (colorNumber >= 5) {
+        if (number == 4) {
             color = colorSets.backgroundColor;
             textInsert = "";
         }
 
-        boardCell.style('background-color', color);
+        if (boardCell.hasClass("contentCell")) {
+            boardCell.style('background-color', color);
+        }
+
         boardCell.attribute('data-colorNumber', colorNumber);
 
         let child = select('.contentBox', `#boardCell${cellID}`);
@@ -565,9 +568,6 @@ class ColorContainer {
         let setNumber = select("#colorSelectForm").value();
         this.colorSetId = setNumber;
 
-        select('#colorConatiner').html("");
-        // this.generateColorContainer();
-
         board.updateCells();
         board.changeIndex();
     }
@@ -827,34 +827,27 @@ function generateBoard() {
     let insert = '';
     let destination = select(".boardContainer");
     let counter = 0;
-    let iteratorX = 0;
-    let iteratorY = -1;
-
-    let kartPosSeq = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
 
     for (let i = 0; i <= 5; i++) {
 
         for (let j = 0; j <= 5; j++) {
 
-            if ((i == 0 && j == 0) || (i == 0 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" data-number="${i+j}" data-position="${i},${j}"><div class="contentBox">${i+j}</div></div>`;
-            else if ((i == 5 && j == 0) || (i == 5 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" data-number="${i+j}" data-position="${i},${j}"><div class="contentBox">${i+j}</div></div>`;
+            if ((i == 0 && j == 0) || (i == 0 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
+            else if ((i == 5 && j == 0) || (i == 5 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
 
-            else if (i == 0) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-number="${i+j}" data-position="${i},${j}"><div class="contentBox">${i+j}</div></div>`;
-            else if (i == 5) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-number="${i+j-5}" data-position="${i},${j}"><div class="contentBox">${i+j-6}</div></div>`;
+            else if (i == 0) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
+            else if (i == 5) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
 
-            else if ((i != 0) && (i != 5) && (j == 0)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-number="${i+j}" data-position="${i},${j}"><div class="contentBox">${i+j}</div></div>`
-            else if ((i != 0) && (i != 5) && (j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-number="${i+j-6}" data-position="${i},${j}"><div class="contentBox">${i+j-5}</div></div>`
+            else if ((i != 0) && (i != 5) && (j == 0)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-colorNumber="4"><div class="contentBox"></div></div>`
+            else if ((i != 0) && (i != 5) && (j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-colorNumber="4"><div class="contentBox"></div></div>`
 
             else {
                 insert = `<div class="boardCell contentCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
-                iteratorX++;
-                iteratorX = iteratorX % 10;
             }
 
             destination.html(insert, true);
             counter++;
         }
-        iteratorY++;
     }
 
 }
