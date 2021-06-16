@@ -44,10 +44,10 @@ class Board {
     }
 
     colorCell(cellID, colorNumber) {
-        let number = colorNumber;
+        let number = Number(colorNumber);
         let boardCell = select(`#boardCell${cellID}`);
         let color = colorSets[`colorSet${colorContainer.colorSetId}`][colorNumber];
-        let textInsert = colorNumber + 1;
+        let textInsert = number + 1;
 
         if (number == 4) {
             color = colorSets.backgroundColor;
@@ -58,7 +58,7 @@ class Board {
             boardCell.style('background-color', color);
         }
 
-        boardCell.attribute('data-colorNumber', colorNumber);
+        boardCell.attribute('data-colorNumber', number);
 
         let child = select('.contentBox', `#boardCell${cellID}`);
         child.html(textInsert);
@@ -66,13 +66,18 @@ class Board {
 
     clearBoard() {
 
-        for (let i = 7; i < 28; i++) {
+        for (let i = 0; i < 36; i++) {
 
-            let target = select('#boardCell' + i);
+            let target = select(`#boardCell${i}`);
+            let child = select('.contentBox', `#boardCell${i}`);
 
             if (target && !target.hasClass('indexCell')) {
                 target.style('backgroundColor', colorSets.backgroundColor);
                 target.attribute("data-colorNumber", 4);
+                child.html("");
+            } else if (target) {
+                target.attribute("data-colorNumber", 4);
+                child.html("");
             }
 
         }
@@ -80,14 +85,14 @@ class Board {
     }
 
     updateCells() {
-        for (let i = 7; i < 28; i++) {
+        for (let i = 0; i < 36; i++) {
 
             let target = select('#boardCell' + i);
 
             if (target && !target.hasClass('indexCell')) {
 
                 let colorId = target.attribute('data-colorNumber');
-                this.colorCell(target, colorId)
+                this.colorCell(i, colorId)
             }
 
         }
@@ -150,140 +155,25 @@ class Board {
             }
             //Ustaw kolory na planszy
 
-            let iterator = 0;
-            for (let i = 0; i < 144; i++) {
-                let target = select('#boardCell' + i);
+            let iterator = 1;
+            for (let i = 1; i < 36; i++) {
+                let target = select(`#boardCell${i}`);
+                let child = select('.contentBox', `#boardCell${i}`);
 
-                if (target && !target.hasClass('indexCell')) {
+                let textInsert = Number(board[iterator]) + 1;
+                textInsert = textInsert % 5;
+
+                if (textInsert == 0 || !textInsert) textInsert = "";
+
+                if (target) {
                     let color = colorSets[`colorSet${colorContainer.colorSetId}`][board[iterator]]
-                    target.style('backgroundColor', color);
+                    if (target.hasClass('contentCell')) target.style('backgroundColor', color);
                     target.attribute("data-colorNumber", board[iterator]);
-
+                    child.html(textInsert);
                     iterator++;
                 }
 
             }
-        }
-
-    }
-
-    changeCellContent(reset) {
-        if (reset) {
-            this.fillBoard("none");
-        } else {
-            let formValue = select("#cellContentSelect").value();
-
-            if (formValue == 1) {
-                this.fillBoard("none");
-            } else if (formValue == 2) {
-                this.fillBoard("numbers");
-            } else if (formValue == 3) {
-                this.fillBoard("address");
-            }
-
-        }
-    }
-
-    fillBoard(_input) {
-
-        let iterator = 1;
-        let cellPosition, cellPositionXY, insert;
-        let targetParent, target;
-
-        for (let i = 7; i <= 28; i++) {
-            targetParent = select('#boardCell' + i);
-            target = select('.contentBox', '#boardCell' + i);
-
-            if (targetParent && !targetParent.hasClass('indexCell')) {
-                if (_input == "none") {
-                    target.html("");
-                } else if (_input == "numbers") {
-                    target.html(iterator);
-                    iterator++
-                } else if (_input == "address") {
-                    cellPosition = targetParent.attribute("data-position");
-                    cellPositionXY = splitTokens(cellPosition, ',');
-                    insert = `${alphabet[cellPositionXY[1]-1]}${cellPositionXY[0]}`
-                    target.html(insert);
-                }
-            }
-
-        }
-
-    }
-
-    fillIndex(_input) {
-
-        let iterator = 1;
-        let cellPosition, cellPositionXY;
-        let targetParent, target;
-
-        for (let i = 0; i < 36; i++) {
-            targetParent = select('#boardCell' + i);
-            target = select('.contentBox', '#boardCell' + i);
-
-            if (targetParent && targetParent.hasClass('indexCell')) {
-                targetParent.style("backgroundColor", "#EFEFEF")
-
-                if (_input == "none") {
-                    target.html("");
-                } else if (_input == "numbers") {
-                    target.html(targetParent.attribute('data-number'));
-                } else if (_input == "address") {
-                    cellPosition = targetParent.attribute("data-position");
-                    cellPositionXY = splitTokens(cellPosition, ',');
-
-                    if (cellPositionXY[0] != 0 && cellPositionXY[0] != 11) {
-                        target.html(targetParent.attribute('data-number'));
-                    } else {
-                        target.html(alphabet[targetParent.attribute('data-number') - 1]);
-                    }
-
-                } else if (_input == "colors") {
-                    let newColor = colorSets[`colorSet${colorContainer.colorSetId}`][targetParent.attribute("data-number") - 1];
-                    targetParent.style('backgroundColor', newColor);
-                    target.html("");
-                }
-            }
-
-        }
-
-    }
-
-    changeIndex(reset) {
-        if (reset) {
-            this.fillIndex("numbers");
-        } else {
-            let formValue = select("#indexContentSelect").value();
-
-            if (formValue == 1) {
-                this.fillIndex("none");
-                selectedIndexMode = "none";
-            } else if (formValue == 2) {
-                this.fillIndex("numbers");
-                selectedIndexMode = "numbers";
-            } else if (formValue == 3) {
-                this.fillIndex("address");
-                selectedIndexMode = "address";
-            } else if (formValue == 4) {
-                this.fillIndex("colors")
-                selectedIndexMode = "colors";
-            }
-        }
-    }
-
-    changeSymetryDrawing() {
-
-        let formValue = select("#symetryDrawingSelect").value();
-
-        if (formValue == 1) {
-            this.symetryType = "none";
-        } else if (formValue == 2) {
-            this.symetryType = "axX";
-        } else if (formValue == 3) {
-            this.symetryType = "axY";
-        } else if (formValue == 4) {
-            this.symetryType = "axXY";
         }
 
     }
@@ -317,18 +207,24 @@ function deCompressListOfCommands(inputList) {
 function readBoardContent() {
     //Lista zawierająca wszystkie ciągi cyfr i liczbę pustych miejsc
     let contrentSequence = [];
-    for (let i = 13; i <= 130; i++) {
+    for (let i = 0; i <= 36; i++) {
         //wybranie pola z planszy
         let target = select('#boardCell' + i);
 
         //Sprawdzanie czy pole jest polem z zawartością (nie index)
-        if (target && !target.hasClass('indexCell')) {
+        if (target) {
             let colorNumber = target.attribute("data-colorNumber");
 
-            if (colorNumber == null) colorNumber = 10;
+            if (colorNumber == null) colorNumber = 4;
             else colorNumber = Number(colorNumber);
 
-            if (colorNumber.between(0, 9)) contrentSequence.push(colorNumber)
+            if (target.hasClass('indexCEll')) {
+
+                if (colorNumber == null || colorNumber == 0) colorNumber = 4;
+
+            }
+
+            if (colorNumber.between(0, 3)) contrentSequence.push(colorNumber)
             else contrentSequence.push("P")
         }
 
@@ -455,9 +351,12 @@ class ColorSets {
         }
 
         if (setAvaliable) {
-            for (let i = 0; i < 10; i++) {
-                let input = select(`#colorPicker${i}`).value();
-                colorArray.push(input);
+            for (let i = 0; i < 4; i++) {
+                let target = select(`#colorPicker${i}`);
+                if (target) {
+                    let input = target.value();
+                    colorArray.push(input);
+                }
             }
 
             colorSets.addColorSet(colorArray, setName);
@@ -569,26 +468,10 @@ class ColorContainer {
         this.colorSetId = setNumber;
 
         board.updateCells();
-        board.changeIndex();
     }
 
 }
 
-function randomizeBoard() {
-    let target, colorToSet;
-
-    for (let i = 13; i <= 130; i++) {
-        target = select('#boardCell' + i);
-
-        if ((target && target.hasClass('contentCell'))) {
-            colorToSet = random(colorSets[`colorSet${colorContainer.colorSetId}`])
-            colorNumber = colorSets[`colorSet${colorContainer.colorSetId}`].indexOf(colorToSet);
-            colorSets.setColor(colorToSet, colorNumber);
-
-            board.handleBoardClick(i);
-        }
-    }
-}
 
 function encodeBoard() {
     updateDate();
@@ -776,17 +659,6 @@ function handleClearBoard() {
     }
 }
 
-function resetApp() {
-    let confirmation = confirm("Potwierdź wyczyszczenie planszy!");
-
-    if (confirmation) {
-        board.clearBoard();
-        board.changeIndex(true);
-        board.changeCellContent(true);
-        //Dodać więcej rzeczy
-    }
-}
-
 const board = new Board();
 const colorSets = new ColorSets(['red', 'yellow', 'blue', 'green'], "Zestaw Kreatywny");
 const colorContainer = new ColorContainer();
@@ -838,8 +710,8 @@ function generateBoard() {
             else if (i == 0) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
             else if (i == 5) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
 
-            else if ((i != 0) && (i != 5) && (j == 0)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-colorNumber="4"><div class="contentBox"></div></div>`
-            else if ((i != 0) && (i != 5) && (j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" data-colorNumber="4"><div class="contentBox"></div></div>`
+            else if ((i != 0) && (i != 5) && (j == 0)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})"" data-colorNumber="4"><div class="contentBox"></div></div>`
+            else if ((i != 0) && (i != 5) && (j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})"" data-colorNumber="4"><div class="contentBox"></div></div>`
 
             else {
                 insert = `<div class="boardCell contentCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
