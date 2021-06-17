@@ -75,24 +75,49 @@ class Board {
                 target.style('backgroundColor', colorSets.backgroundColor);
                 target.attribute("data-colorNumber", 4);
                 child.html("");
-            } else if (target) {
-                target.attribute("data-colorNumber", 4);
-                child.html("");
             }
 
         }
 
     }
 
-    updateCells() {
+    clearIndex() {
         for (let i = 0; i < 36; i++) {
 
-            let target = select('#boardCell' + i);
+            let target = select(`#boardCell${i}`);
+            let child = select('.contentBox', `#boardCell${i}`);
+
+            if (target && target.hasClass('indexCell')) {
+                target.attribute("data-colorNumber", 4);
+                child.html("");
+            }
+
+        }
+    }
+
+    updateCells() {
+        let colorId, child, target, txt;
+
+        for (let i = 0; i < 36; i++) {
+
+            target = select('#boardCell' + i);
 
             if (target && !target.hasClass('indexCell')) {
 
-                let colorId = target.attribute('data-colorNumber');
+                colorId = target.attribute('data-colorNumber');
                 this.colorCell(i, colorId)
+
+                if (cellContentVisible) {
+                    child = select('.contentBox', `#boardCell${i}`)
+                    txt = Number(colorId) + 1
+                    txt = txt % 5;
+                    if (txt == 0) txt = "";
+                    child.html(txt);
+                } else {
+                    child = select('.contentBox', `#boardCell${i}`)
+                    child.html("");
+                }
+
             }
 
         }
@@ -180,6 +205,11 @@ class Board {
 
 }
 
+function handleCellContentDisplay() {
+    cellContentVisible = !cellContentVisible;
+    board.updateCells();
+}
+
 function deCompressListOfCommands(inputList) {
     //Podziel dostarczone dane w miejscach z ,
     let tempList = split(inputList, ',')
@@ -218,7 +248,7 @@ function readBoardContent() {
             if (colorNumber == null) colorNumber = 4;
             else colorNumber = Number(colorNumber);
 
-            if (target.hasClass('indexCEll')) {
+            if (target.hasClass('indexCell')) {
 
                 if (colorNumber == null || colorNumber == 0) colorNumber = 4;
 
@@ -659,12 +689,18 @@ function handleClearBoard() {
     }
 }
 
+function handleClearIndex() {
+    let confirmation = confirm("Potwierdź wyczyszczenie planszy!");
+
+    if (confirmation) {
+        board.clearIndex();
+    }
+}
+
 const board = new Board();
 const colorSets = new ColorSets(['red', 'yellow', 'blue', 'green'], "Zestaw Kreatywny");
 const colorContainer = new ColorContainer();
-var selectedIndexMode = "numbers";
-
-const alphabet = utility.getLettersFromAlphabet();
+var cellContentVisible = true;
 
 function preload() {
     //Obsłużenie daty w stopce
