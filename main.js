@@ -46,10 +46,10 @@ class Board {
     colorCell(cellID, colorNumber) {
         let number = Number(colorNumber);
         let boardCell = select(`#boardCell${cellID}`);
-        let color = colorSets[`colorSet${colorContainer.colorSetId}`][colorNumber];
-        let textInsert = number + 1;
+        let color = colorSets[`colorSet${colorContainer.colorSetId}`][colorNumber - 1];
+        let textInsert = number;
 
-        if (number == 4) {
+        if (number == 0) {
             color = colorSets.backgroundColor;
             textInsert = "";
         }
@@ -73,7 +73,7 @@ class Board {
 
             if (target && !target.hasClass('indexCell')) {
                 target.style('backgroundColor', colorSets.backgroundColor);
-                target.attribute("data-colorNumber", 4);
+                target.attribute("data-colorNumber", 0);
                 child.html("");
             }
 
@@ -88,7 +88,7 @@ class Board {
             let child = select('.contentBox', `#boardCell${i}`);
 
             if (target && target.hasClass('indexCell')) {
-                target.attribute("data-colorNumber", 4);
+                target.attribute("data-colorNumber", 0);
                 child.html("");
             }
 
@@ -109,7 +109,7 @@ class Board {
 
                 if (cellContentVisible) {
                     child = select('.contentBox', `#boardCell${i}`)
-                    txt = Number(colorId) + 1
+                    txt = Number(colorId);
                     txt = txt % 5;
                     if (txt == 0) txt = "";
                     child.html(txt);
@@ -166,7 +166,7 @@ class Board {
 
                     //Wypełnin pola 10 - puste pole
                     for (let i = 0; i < value; i++) {
-                        board.push(10);
+                        board.push(0);
                     }
 
                 } else {
@@ -185,14 +185,17 @@ class Board {
                 let target = select(`#boardCell${i}`);
                 let child = select('.contentBox', `#boardCell${i}`);
 
-                let textInsert = Number(board[iterator]) + 1;
+                let textInsert = Number(board[iterator]);
                 textInsert = textInsert % 5;
 
                 if (textInsert == 0 || !textInsert) textInsert = "";
 
                 if (target) {
-                    let color = colorSets[`colorSet${colorContainer.colorSetId}`][board[iterator]]
+                    let color = colorSets[`colorSet${colorContainer.colorSetId}`][board[iterator] - 1];
+
                     if (target.hasClass('contentCell')) target.style('backgroundColor', color);
+
+
                     target.attribute("data-colorNumber", board[iterator]);
                     child.html(textInsert);
                     iterator++;
@@ -245,16 +248,16 @@ function readBoardContent() {
         if (target) {
             let colorNumber = target.attribute("data-colorNumber");
 
-            if (colorNumber == null) colorNumber = 4;
+            if (colorNumber == null) colorNumber = 0;
             else colorNumber = Number(colorNumber);
 
             if (target.hasClass('indexCell')) {
 
-                if (colorNumber == null || colorNumber == 0) colorNumber = 4;
+                if (colorNumber == null) colorNumber = 0;
 
             }
 
-            if (colorNumber.between(0, 3)) contrentSequence.push(colorNumber)
+            if (colorNumber.between(1, 4)) contrentSequence.push(colorNumber)
             else contrentSequence.push("P")
         }
 
@@ -719,7 +722,7 @@ function setup() {
     noCanvas();
     noLoop();
 
-    generateBoard();
+    // generateBoard();
 
     colorSets.addColorSet(['khaki', 'deepskyblue', 'purple', 'greenyellow'], "Zestaw Matematyczny");
     // colorContainer.generateColorContainer();
@@ -740,17 +743,17 @@ function generateBoard() {
 
         for (let j = 0; j <= 5; j++) {
 
-            if ((i == 0 && j == 0) || (i == 0 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
-            else if ((i == 5 && j == 0) || (i == 5 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
+            if ((i == 0 && j == 0) || (i == 0 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="0"><div class="contentBox"></div></div>`;
+            else if ((i == 5 && j == 0) || (i == 5 && j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1 invisible" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="0"><div class="contentBox"></div></div>`;
 
-            else if (i == 0) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
-            else if (i == 5) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
+            else if (i == 0) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="0"><div class="contentBox"></div></div>`;
+            else if (i == 5) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="0"><div class="contentBox"></div></div>`;
 
-            else if ((i != 0) && (i != 5) && (j == 0)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})"" data-colorNumber="4"><div class="contentBox"></div></div>`
-            else if ((i != 0) && (i != 5) && (j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})"" data-colorNumber="4"><div class="contentBox"></div></div>`
+            else if ((i != 0) && (i != 5) && (j == 0)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})"" data-colorNumber="0"><div class="contentBox"></div></div>`
+            else if ((i != 0) && (i != 5) && (j == 5)) insert = `<div class="boardCell indexCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})"" data-colorNumber="0"><div class="contentBox"></div></div>`
 
             else {
-                insert = `<div class="boardCell contentCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="4"><div class="contentBox"></div></div>`;
+                insert = `<div class="boardCell contentCell ratio ratio-1x1" id="boardCell${counter}" onclick="board.handleBoardClick(${counter})" data-colorNumber="0"><div class="contentBox"></div></div>`;
             }
 
             destination.html(insert, true);
